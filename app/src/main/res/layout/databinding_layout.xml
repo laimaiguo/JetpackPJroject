@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <!--导入的类名相同时可以用 alias声明别名，用别名进行使用-->
+        <import type="com.example.jetpackproject.bean.SysInfoObs" />
+
+        <import type="com.example.jetpackproject.utils.DateUtils" />
+
+        <variable
+            name="info"
+            type="SysInfoObs" />
+
+        <import type="androidx.databinding.ObservableArrayMap" />
+
+        <variable
+            name="user"
+            type="ObservableArrayMap&lt;String,Object>" />
+
+        <import type="androidx.databinding.ObservableArrayList" />
+
+        <variable
+            name="obList"
+            type="ObservableArrayList&lt;Object>" />
+
+        <import type="com.example.jetpackproject.bean.ClickFunctionVM" />
+
+        <variable
+            name="vm"
+            type="ClickFunctionVM" />
+
+        <import type="com.example.jetpackproject.bean.TwoWay" />
+
+        <variable
+            name="way"
+            type="TwoWay" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/d16">
+        <!--搜索图标是否显示在搜索框内 iconifiedByDefault-->
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_launcher_round"
+            android:queryBackground="@color/purple_200"
+            android:queryHint="请输入关键字" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{info.info1}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{info.timeStr}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{DateUtils.INSTANCE.getDate(info.time)}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="8dp"
+                android:background="#f0f0f0" />
+
+            <!--注意格式-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{user.firstName+" "+ user.lastName}' />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(1+(Integer)user.age)}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="8dp"
+                android:background="#f0f0f0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{obList[0]+" "+obList[1]}' />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{obList[2]+" "+obList[4]}' />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(1+(Integer)obList[3])}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <!--点击事件可以使用点.或者两个冒号::-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:onClick="@{vm.onClickBack}"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{vm::onClickAdd}"
+                android:src="@drawable/ic_baseline_arrow_forward_24" />
+
+        </LinearLayout>
+
+        <!--@={} 表示接收属性的数据更改并同时监听用户更新-->
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={way.rememberMe}"
+            android:text="Android jetpack" />
+
+    </LinearLayout>
+</layout>

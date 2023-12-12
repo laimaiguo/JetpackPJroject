@@ -1,38 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/infoText"
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="java.util.Map" />
+
+        <variable
+            name="content"
+            type="String" />
+
+        <variable
+            name="age"
+            type="Integer" />
+
+        <variable
+            name="isshow"
+            type="Boolean" />
+
+        <variable
+            name="map"
+            type="Map&lt;String,String>" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textSize="32sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/plusOneBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Plus One"
-        android:textAllCaps="false" />
+        <TextView
+            android:id="@+id/infoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="32sp" />
 
-    <Button
-        android:id="@+id/clearBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        android:textAllCaps="false" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@{content}"
+            android:textSize="32sp" />
 
-    <Button
-        android:id="@+id/getUserBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="get User"
-        android:textAllCaps="false" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@{String.valueOf(age)}"
+            android:textSize="32sp"
+            android:visibility="@{isshow==true?View.VISIBLE:View.GONE}" />
+
+        <Button
+            android:id="@+id/plusOneBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Plus One"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/clearBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/getUserBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="get User"
+            android:textAllCaps="false" />
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

@@ -6,19 +6,23 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.jetpackproject.databinding.ActivityMainBinding
 import com.example.jetpackproject.utils.MainViewModelFactory
 import com.example.jetpackproject.utils.MyObserver
 import com.example.jetpackproject.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+    var binding: ActivityMainBinding? = null
     lateinit var viewModel: MainViewModel
     lateinit var sp: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        /*binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)*/
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         sp = getPreferences(Context.MODE_PRIVATE)
         val countReserved = sp.getInt("count_reserved", 0)
         viewModel = ViewModelProvider(
@@ -26,21 +30,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             MainViewModelFactory(countReserved)
         ).get(MainViewModel::class.java)
         initView()
+        binding!!.isshow = true
         //使用lifecycle感知activity的生命周期
         lifecycle.addObserver(MyObserver(lifecycle))
         //使用livedata 在数据发生变化的时候会通知观察者
         viewModel.counter.observe(this) {
-            infoText.text = it.toString()
+            binding!!.infoText.text = it.toString()
+            binding!!.content = it.toString()
+            binding!!.age = it
         }
         viewModel.user.observe(this) {
-            infoText.text = it.firstName
+            binding!!.infoText.text = it.firstName
         }
     }
 
     private fun initView() {
-        plusOneBtn.setOnClickListener(this)
-        clearBtn.setOnClickListener(this)
-        getUserBtn.setOnClickListener(this)
+        binding!!.plusOneBtn.setOnClickListener(this)
+        binding!!.clearBtn.setOnClickListener(this)
+        binding!!.getUserBtn.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
