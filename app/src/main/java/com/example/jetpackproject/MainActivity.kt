@@ -3,6 +3,7 @@ package com.example.jetpackproject
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
@@ -14,11 +15,13 @@ import com.example.jetpackproject.utils.MyObserver
 import com.example.jetpackproject.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+    private val TAG = "ACT"
     var binding: ActivityMainBinding? = null
     lateinit var viewModel: MainViewModel
     lateinit var sp: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.e(TAG, "onCreate: start")
         super.onCreate(savedInstanceState)
         /*binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)*/
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding!!.isshow = true
         //使用lifecycle感知activity的生命周期
         lifecycle.addObserver(MyObserver(lifecycle))
+        Log.e("onCreate: ", lifecycle.currentState.name)
         //使用livedata 在数据发生变化的时候会通知观察者
         viewModel.counter.observe(this) {
             binding!!.infoText.text = it.toString()
@@ -42,6 +46,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.user.observe(this) {
             binding!!.infoText.text = it.firstName
         }
+        Log.e(TAG, "onCreate: end")
     }
 
     private fun initView() {
@@ -65,10 +70,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    override fun onStart() {
+        Log.e(TAG, "onStart: start")
+        super.onStart()
+        Log.e(TAG, "onStart: end")
+    }
     override fun onPause() {
         super.onPause()
         sp.edit {
             putInt("count_reserved", viewModel.counter.value ?: 0)
         }
+    }
+
+    override fun onDestroy() {
+        Log.e("ACT", "onDestroy: start")
+        super.onDestroy()
+        Log.e("onDestroy: ", lifecycle.currentState.name)
+        Log.e("ACT", "onDestroy: end")
     }
 }

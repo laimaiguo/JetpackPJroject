@@ -11,6 +11,7 @@ import com.example.jetpackproject.utils.Repository
  *Create by GWJ 2023/9/3 16:12
  * ViewModel：存放activity需要的变量，减少activity的逻辑
  * LiveData：可以包含任何类型的数据，并在数据发生变化时通知给观察者
+ * 当LiveData修饰的变量在主线程中重新赋值时用seValue（立即传送），在任意线程中使用时用postValue（依次发送）
  **/
 class MainViewModel(countReserved: Int) : ViewModel() {
     val counter: LiveData<Int>

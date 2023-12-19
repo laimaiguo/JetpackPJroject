@@ -11,6 +11,11 @@ import androidx.lifecycle.OnLifecycleEvent
  **/
 class MyObserver(val lifecycle: Lifecycle) : LifecycleObserver {
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun activityCreate() {
+        Log.d("MyObserver", "activityCreate")
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun activityStart() {
         Log.d("MyObserver", "activityStart")
@@ -25,4 +30,9 @@ class MyObserver(val lifecycle: Lifecycle) : LifecycleObserver {
     fun activityStop() {
         Log.d("MyObserver", "activityStop")
     }
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun activityDestroy() {
+        Log.d("MyObserver", "activityDestroy")
+    }
+
 }
